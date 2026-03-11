@@ -1,0 +1,1438 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>수업 운영 자료실</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --line:#e5eaf3;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#2563eb;
+      --primary-soft:#eff6ff;
+      --green:#16a34a;
+      --green-soft:#ecfdf3;
+      --orange:#ea580c;
+      --orange-soft:#fff7ed;
+      --purple:#7c3aed;
+      --purple-soft:#f5f3ff;
+      --gray:#64748b;
+      --gray-soft:#f1f5f9;
+      --shadow:0 12px 32px rgba(15,23,42,.06);
+      --radius:20px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ margin:0; padding:0; }
+    body{
+      font-family:'Noto Sans KR', sans-serif;
+      background:linear-gradient(180deg,#f8fbff 0%, #f5f7fb 100%);
+      color:var(--text);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    button{ font-family:inherit; }
+
+    .wrap{
+      width:min(1320px, calc(100% - 32px));
+      margin:0 auto;
+      padding:36px 0 60px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg,#ffffff 0%, #f2f7ff 100%);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:30px;
+      display:grid;
+      grid-template-columns:1.5fr 1fr;
+      gap:20px;
+      margin-bottom:22px;
+    }
+
+    .hero h1{
+      margin:0 0 10px;
+      font-size:clamp(28px, 4vw, 40px);
+      line-height:1.2;
+      letter-spacing:-0.03em;
+    }
+
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:15px;
+    }
+
+    .hero-note{
+      display:grid;
+      gap:10px;
+      align-content:start;
+    }
+
+    .mini-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px 16px;
+    }
+
+    .mini-card strong{
+      display:block;
+      font-size:14px;
+      margin-bottom:6px;
+    }
+
+    .mini-card span{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .toolbar{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:14px;
+      margin-bottom:24px;
+      align-items:center;
+    }
+
+    .search-box{
+      position:relative;
+    }
+
+    .search-box input{
+      width:100%;
+      height:52px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      padding:0 18px 0 48px;
+      font-size:15px;
+      outline:none;
+      box-shadow:var(--shadow);
+    }
+
+    .search-box input:focus{
+      border-color:#bfd5ff;
+      box-shadow:0 0 0 4px rgba(37,99,235,.08);
+    }
+
+    .search-icon{
+      position:absolute;
+      left:16px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#9aa4b2;
+      font-size:18px;
+      pointer-events:none;
+    }
+
+    .filter-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:flex-end;
+    }
+
+    .filter-btn{
+      height:42px;
+      padding:0 16px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:600;
+      transition:.18s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+    }
+
+    .section{
+      margin-bottom:30px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:24px;
+      letter-spacing:-0.02em;
+    }
+
+    .section-head p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+      gap:16px;
+      margin-bottom:32px;
+    }
+
+    .quick-link{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .quick-link:hover{
+      transform:translateY(-2px);
+      border-color:#cfe0ff;
+      box-shadow:0 16px 30px rgba(37,99,235,.08);
+    }
+
+    .quick-link .icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      margin-bottom:14px;
+      font-size:22px;
+      background:var(--primary-soft);
+      color:var(--primary);
+    }
+
+    .quick-link h3{
+      margin:0 0 6px;
+      font-size:17px;
+    }
+
+    .quick-link p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .program-box{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      margin-bottom:18px;
+    }
+
+    .program-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .program-top h3{
+      margin:0 0 6px;
+      font-size:22px;
+      letter-spacing:-0.02em;
+    }
+
+    .program-top p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .count-badge{
+      flex:0 0 auto;
+      height:36px;
+      min-width:36px;
+      padding:0 12px;
+      border-radius:999px;
+      background:#eef2ff;
+      color:#3757c5;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:13px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .list-head,
+    .resource-row{
+    display:grid;
+    grid-template-columns:90px minmax(260px, 1.2fr) minmax(220px, 0.9fr) 280px;
+    gap:14px;
+    align-items:center;
+    }
+
+    .list-head{
+      padding:0 14px 10px;
+      color:#667085;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .list-head > div{
+    text-align:left;
+    }
+
+    .resource-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .resource-row{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fcfdff;
+      padding:14px;
+    }
+
+    .type-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:62px;
+      height:30px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      padding:0 10px;
+    }
+
+    .type-site{ background:var(--primary-soft); color:var(--primary); }
+    .type-pdf{ background:var(--green-soft); color:var(--green); }
+    .type-hwp{ background:var(--gray-soft); color:var(--gray); }
+    .type-file{ background:var(--orange-soft); color:var(--orange); }
+    .type-zep{ background:var(--purple-soft); color:var(--purple); }
+    .type-padlet{ background:var(--purple-soft); color:var(--purple); }
+
+    .title-cell{
+      min-width:0;
+    }
+
+    .resource-title{
+      font-size:15px;
+      font-weight:700;
+      line-height:1.45;
+      word-break:keep-all;
+    }
+
+    .resource-desc{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.5;
+    word-break:keep-all;
+    text-align:left;
+    justify-self:start;
+    }
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:8px;
+  width:100%;
+}
+
+    .btn{
+      height:36px;
+      padding:0 13px;
+      border-radius:11px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      font-size:13px;
+      font-weight:600;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color:#cfe0ff;
+    }
+
+    .btn.primary{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+    }
+
+    .btn.primary:hover{
+      box-shadow:0 10px 18px rgba(37,99,235,.18);
+    }
+
+    .btn.copy{
+      color:var(--primary);
+      border-color:#cfe0ff;
+    }
+
+    .btn.copy:hover{
+      background:var(--primary-soft);
+    }
+
+    .qr-preview{
+      margin-top:12px;
+      border:1px dashed #d6ddf0;
+      background:#fafbff;
+      border-radius:14px;
+      padding:12px;
+      display:none;
+      grid-template-columns:96px 1fr;
+      gap:12px;
+      align-items:center;
+    }
+
+    .qr-preview.show{
+      display:grid;
+    }
+
+    .qr-box{
+      width:96px;
+      height:96px;
+      border-radius:12px;
+      background:#fff;
+      border:1px solid var(--line);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+
+    .qr-box img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .qr-info strong{
+      display:block;
+      font-size:14px;
+      margin-bottom:4px;
+    }
+
+    .qr-info p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .empty-message{
+      display:none;
+      text-align:center;
+      background:#fff;
+      border:1px dashed #cfd8e6;
+      border-radius:20px;
+      padding:40px 20px;
+      color:var(--muted);
+      box-shadow:var(--shadow);
+    }
+
+    .footer-note{
+      margin-top:36px;
+      padding:18px 20px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .muted-link{
+      color:var(--primary);
+      font-weight:600;
+    }
+
+    .toast{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      padding:12px 16px;
+      background:#111827;
+      color:#fff;
+      border-radius:12px;
+      font-size:13px;
+      opacity:0;
+      transform:translateY(10px);
+      pointer-events:none;
+      transition:.2s ease;
+      z-index:1000;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 1200px){
+      .hero,
+      .toolbar{
+        grid-template-columns:1fr;
+      }
+
+      .filter-list{
+        justify-content:flex-start;
+      }
+
+      .quick-grid{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+      }
+
+      .list-head,
+      .resource-row{
+       grid-template-columns:90px minmax(260px, 1.2fr) minmax(220px, 0.9fr) 320px;
+      }
+    }
+
+    @media (max-width: 900px){
+      .list-head{
+        display:none;
+      }
+
+      .resource-row{
+        grid-template-columns:1fr;
+        align-items:flex-start;
+      }
+
+      .actions{
+        justify-content:flex-start;
+      }
+
+      .qr-preview{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 768px){
+      .wrap{
+        width:min(100% - 20px, 100%);
+        padding:20px 0 46px;
+      }
+
+      .hero{
+        padding:22px;
+        border-radius:22px;
+      }
+
+      .quick-grid{
+        grid-template-columns:1fr;
+      }
+
+      .program-top{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .section-head{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <h1>수업 운영 자료실</h1>
+        <p>
+          강사용 내부 운영 페이지입니다. 수업에 필요한 사이트, 유인물, 한글 파일, 실습 파일,
+          학생 작품 링크를 한곳에서 확인할 수 있도록 정리했습니다.
+          프로그램별로 빠르게 찾고 바로 실행할 수 있도록 구성했습니다.
+        </p>
+      </div>
+
+      <div class="hero-note">
+        <div class="mini-card">
+          <strong>이 페이지 활용 방법</strong>
+          <span>사이트는 새 탭으로 열고, PDF는 미리보기 또는 다운로드, HWP는 다운로드 중심으로 사용합니다. 필요한 경우 링크 복사 버튼으로 강사끼리 바로 공유할 수 있습니다.</span>
+        </div>
+        <div class="mini-card">
+          <strong>ZEP 활용 방식</strong>
+          <span>ZEP 자료는 입장 링크와 함께 QR 확인 버튼을 넣어, 노트북으로 열거나 학생들에게 바로 QR을 보여줄 수 있도록 구성했습니다.</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="toolbar">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="프로그램명, 자료명, 키워드 검색" />
+      </div>
+
+      <div class="filter-list">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="common">공통 도구</button>
+        <button class="filter-btn" data-filter="program">프로그램</button>
+        <button class="filter-btn" data-filter="zep">ZEP</button>
+        <button class="filter-btn" data-filter="student">학생 작품</button>
+      </div>
+    </section>
+
+    <section class="section" data-group="common">
+      <div class="section-head">
+        <div>
+          <h2>공통 도구 바로가기</h2>
+          <p>여러 수업에서 공통으로 사용할 수 있는 실습 플랫폼과 외부 도구</p>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+        <a class="quick-link searchable" data-type="common" data-keywords="앱개발 app inventor ai2 앱인벤터 mit 로그인" href="https://login.appinventor.mit.edu/codelogin" target="_blank" rel="noopener noreferrer">
+          <div class="icon">⌘</div>
+          <h3>App Inventor</h3>
+          <p>앱 개발 수업용 프로젝트 제작 및 로그인 페이지</p>
+        </a>
+
+        <a class="quick-link searchable" data-type="common" data-keywords="프롬프트 엔지니어 vscode visual studio code" href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">
+          <div class="icon">⌨</div>
+          <h3>VS Code</h3>
+          <p>프롬프트 엔지니어 및 코딩 실습에 활용 가능한 편집 도구</p>
+        </a>
+
+        <a class="quick-link searchable" data-type="common" data-keywords="ai 운동 ai 게임 엔트리 playentry" href="https://playentry.org/" target="_blank" rel="noopener noreferrer">
+          <div class="icon">▶</div>
+          <h3>Entry</h3>
+          <p>AI 운동, AI 게임 등 엔트리 기반 활동 진행 시 활용</p>
+        </a>
+
+        <a class="quick-link searchable" data-type="common" data-keywords="vr 딜라이텍스 delightex" href="https://www.delightex.com/edu" target="_blank" rel="noopener noreferrer">
+          <div class="icon">◈</div>
+          <h3>Delightex VR</h3>
+          <p>VR 및 메타버스 관련 수업 운영용 플랫폼</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" data-group="program">
+      <div class="section-head">
+        <div>
+          <h2>프로그램별 자료</h2>
+          <p>카드형이 아닌 가로형 리스트 구조로 정리한 운영 자료</p>
+        </div>
+      </div>
+
+      <!-- 빅데이터 경제 -->
+      <article class="program-box searchable" data-type="program" data-keywords="빅데이터 경제 주식 시뮬레이션 pdf hwp">
+        <div class="program-top">
+          <div>
+            <h3>빅데이터 경제</h3>
+            <p>주식 시뮬레이션 사이트와 학생 유인물, 한글 파일을 함께 관리하는 섹션입니다.</p>
+          </div>
+          <div class="count-badge">3개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">주식 시뮬레이션 A</div>
+            </div>
+            <div class="resource-desc">실습용 사이트</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/stockgame-A/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/stockgame-A/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">빅데이터 경제 학생 유인물</div>
+            </div>
+            <div class="resource-desc">학생 배포용 PDF</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/bigdata-economy.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-hwp">HWP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">빅데이터 경제 한글 파일</div>
+            </div>
+            <div class="resource-desc">강사용 수정본 예시</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/bigdata-economy.hwp">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 콘텐츠 기획 -->
+      <article class="program-box searchable" data-type="program" data-keywords="콘텐츠 기획 스피드퀴즈 광고 기획 pdf hwp">
+        <div class="program-top">
+          <div>
+            <h3>콘텐츠 기획</h3>
+            <p>퀴즈형 사이트와 기획 관련 유인물, 한글 파일을 모아둔 섹션입니다.</p>
+          </div>
+          <div class="count-badge">6개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">스피드퀴즈 문제 1</div>
+            </div>
+            <div class="resource-desc">수업 도입용 퀴즈</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/quiz1/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/quiz1/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">스피드퀴즈 카테고리 2</div>
+            </div>
+            <div class="resource-desc">카테고리형 퀴즈</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/quiz2/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/quiz2/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">콘텐츠 기획안</div>
+            </div>
+            <div class="resource-desc">학생용 또는 운영용 PDF</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/content-plan.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">스토리 기획자 미니실습 / 세계관</div>
+            </div>
+            <div class="resource-desc">실습 자료</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/story-planner.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">크리에이티브 광고 기획안</div>
+            </div>
+            <div class="resource-desc">광고 기획 수업 자료</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/ad-plan.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-hwp">HWP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">콘텐츠 기획 한글 원본</div>
+            </div>
+            <div class="resource-desc">수정용 원본 파일</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/content-plan.hwp">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 경제전략 -->
+      <article class="program-box searchable" data-type="program" data-keywords="경제전략 경매게임 유인물 pdf hwp">
+        <div class="program-top">
+          <div>
+            <h3>경제전략</h3>
+            <p>경매게임 사이트와 유인물, 한글 파일을 함께 관리하는 섹션입니다.</p>
+          </div>
+          <div class="count-badge">4개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">경매게임 1</div>
+            </div>
+            <div class="resource-desc">수업용 사이트</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/auction1/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/auction1/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">경매게임 2</div>
+            </div>
+            <div class="resource-desc">심화용 사이트</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/auction2/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/auction2/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">경제전략 유인물</div>
+            </div>
+            <div class="resource-desc">학생 활동지</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/economy-strategy.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-hwp">HWP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">경제전략 한글 파일</div>
+            </div>
+            <div class="resource-desc">강사용 수정본</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/economy-strategy.hwp">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 정책연구 -->
+      <article class="program-box searchable" data-type="program" data-keywords="정책연구 국정운영 시뮬레이션 pdf hwp">
+        <div class="program-top">
+          <div>
+            <h3>정책연구</h3>
+            <p>국정 운영 시뮬레이션과 기록용 PDF, 한글 파일을 함께 정리하는 섹션입니다.</p>
+          </div>
+          <div class="count-badge">3개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">국정 운영 시뮬레이션</div>
+            </div>
+            <div class="resource-desc">체험형 활동 사이트</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/policy/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/policy/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">국정운영 성과 기록 시트</div>
+            </div>
+            <div class="resource-desc">활동 기록용 PDF</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/policy-record.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-hwp">HWP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">정책연구 한글 파일</div>
+            </div>
+            <div class="resource-desc">수정용 문서</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/policy-record.hwp">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 스타트업 설계 -->
+      <article class="program-box searchable" data-type="program" data-keywords="스타트업 설계 창업 계획 pdf hwp">
+        <div class="program-top">
+          <div>
+            <h3>스타트업 설계</h3>
+            <p>창업 계획 사이트와 학생용 PDF, 강사용 한글 파일을 함께 정리하는 섹션입니다.</p>
+          </div>
+          <div class="count-badge">3개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">창업 계획 사이트</div>
+            </div>
+            <div class="resource-desc">실습용 사이트</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/startup-plan/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/startup-plan/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">창업계획서 PDF</div>
+            </div>
+            <div class="resource-desc">학생용 배포본</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/startup-plan.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-hwp">HWP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">창업계획서 한글 원본</div>
+            </div>
+            <div class="resource-desc">강사용 원본</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/startup-plan.hwp">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 빅데이터 분석 -->
+      <article class="program-box searchable" data-type="program" data-keywords="빅데이터 분석 상권분석 차량추천 cars data 엑셀 xlsx hwp">
+        <div class="program-top">
+          <div>
+            <h3>빅데이터 분석</h3>
+            <p>상권 분석 사이트와 PDF, 엑셀 파일, 한글 파일을 함께 관리하는 섹션입니다.</p>
+          </div>
+          <div class="count-badge">4개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-site">SITE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">상권 분석 사이트</div>
+            </div>
+            <div class="resource-desc">실습용 분석 페이지</div>
+            <div class="actions">
+              <a class="btn primary" href="https://able0220.github.io/localbiz/" target="_blank" rel="noopener noreferrer">새 탭 열기</a>
+              <button class="btn copy" data-copy="https://able0220.github.io/localbiz/">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-pdf">PDF</span></div>
+            <div class="title-cell">
+              <div class="resource-title">차량 추천 유인물</div>
+            </div>
+            <div class="resource-desc">학생용 PDF</div>
+            <div class="actions">
+              <a class="btn" href="#">미리보기</a>
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/car-recommend.pdf">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-file">FILE</span></div>
+            <div class="title-cell">
+              <div class="resource-title">cars Data 엑셀 파일</div>
+            </div>
+            <div class="resource-desc">실습 데이터</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/cars-data.xlsx">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-hwp">HWP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">빅데이터 분석 한글 파일</div>
+            </div>
+            <div class="resource-desc">운영용 문서</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/bigdata-analysis.hwp">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" data-group="zep">
+      <div class="section-head">
+        <div>
+          <h2>ZEP 및 메타버스 자료</h2>
+          <p>입장 링크, 링크 복사, QR 보기까지 한 줄에서 바로 사용할 수 있도록 정리</p>
+        </div>
+      </div>
+
+      <article class="program-box searchable" data-type="zep" data-keywords="zep 메타버스 운동회 환경맵 제작 기본 중급 qr">
+        <div class="program-top">
+          <div>
+            <h3>메타버스 기본 자료</h3>
+            <p>미니 운동회, 환경 맵, 제작용 맵 등 기본 운영용 ZEP 콘텐츠입니다.</p>
+          </div>
+          <div class="count-badge">5개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">미니 운동회</div>
+              <div class="qr-preview" id="qr-mini-sports">
+                <div class="qr-box">
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://zep.us/play/sample-mini-sports" alt="미니 운동회 QR">
+                </div>
+                <div class="qr-info">
+                  <strong>미니 운동회 QR</strong>
+                  <p>학생들에게 바로 보여줄 수 있는 QR입니다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="resource-desc">학생 입장용 링크 및 QR</div>
+            <div class="actions">
+              <a class="btn primary" href="https://zep.us/play/sample-mini-sports" target="_blank" rel="noopener noreferrer">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-mini-sports">링크 복사</button>
+              <button class="btn" data-qr-toggle="qr-mini-sports">QR 보기</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">초등 환경 맵</div>
+              <div class="qr-preview" id="qr-env-map">
+                <div class="qr-box">
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://zep.us/play/sample-env-map" alt="환경 맵 QR">
+                </div>
+                <div class="qr-info">
+                  <strong>환경 맵 QR</strong>
+                  <p>학생 입장용 QR입니다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="resource-desc">환경 수업용 맵</div>
+            <div class="actions">
+              <a class="btn primary" href="https://zep.us/play/sample-env-map" target="_blank" rel="noopener noreferrer">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-env-map">링크 복사</button>
+              <button class="btn" data-qr-toggle="qr-env-map">QR 보기</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">초등 제작 맵</div>
+            </div>
+            <div class="resource-desc">제작 실습용 맵</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-maker-map">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">기본 맵</div>
+            </div>
+            <div class="resource-desc">기본 운영용</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-basic-map">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell">
+              <div class="resource-title">중급 맵</div>
+            </div>
+            <div class="resource-desc">심화 운영용</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-middle-map">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="program-box searchable" data-type="zep" data-keywords="제약연구 바이오파이썬 반도체 복습 정보보안 rsa 암호">
+        <div class="program-top">
+          <div>
+            <h3>전공형 ZEP 콘텐츠</h3>
+            <p>제약연구, 바이오 파이썬, 반도체, 정보보안, RSA 암호 맵을 함께 정리한 섹션입니다.</p>
+          </div>
+          <div class="count-badge">5개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell"><div class="resource-title">제약연구 맵</div></div>
+            <div class="resource-desc">전공형 활동용</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-pharm">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell"><div class="resource-title">바이오 파이썬</div></div>
+            <div class="resource-desc">생명과학 연계</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-bio">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell"><div class="resource-title">반도체 3차시 복습</div></div>
+            <div class="resource-desc">복습용 맵</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-semiconductor">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell"><div class="resource-title">정보보안 맵</div></div>
+            <div class="resource-desc">보안 체험형 맵</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-security">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-zep">ZEP</span></div>
+            <div class="title-cell"><div class="resource-title">RSA 암호 맵</div></div>
+            <div class="resource-desc">암호학 연계 활동</div>
+            <div class="actions">
+              <a class="btn primary" href="#">입장하기</a>
+              <button class="btn copy" data-copy="https://zep.us/play/sample-rsa">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" data-group="student">
+      <div class="section-head">
+        <div>
+          <h2>학생 작품 자료</h2>
+          <p>학생 결과물이나 패들렛 링크를 한 줄씩 보기 쉽게 정리한 섹션입니다.</p>
+        </div>
+      </div>
+
+      <article class="program-box searchable" data-type="student" data-keywords="패들렛 학생작품 프롬프트 엔지니어 똑똑한 상상이룸 로고디자인 애니메이터">
+        <div class="program-top">
+          <div>
+            <h3>학생 작품 모음</h3>
+            <p>과목별 학생 결과물, 패들렛 작품 링크, 수업 후 공유 자료를 정리하는 섹션입니다.</p>
+          </div>
+          <div class="count-badge">4개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-padlet">PADLET</span></div>
+            <div class="title-cell"><div class="resource-title">프롬프트 엔지니어 작품</div></div>
+            <div class="resource-desc">학생 결과물 모음</div>
+            <div class="actions">
+              <a class="btn primary" href="#">열기</a>
+              <button class="btn copy" data-copy="https://padlet.com/sample/prompt">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-padlet">PADLET</span></div>
+            <div class="title-cell"><div class="resource-title">똑똑한 상상이룸 작품</div></div>
+            <div class="resource-desc">학생 결과물 모음</div>
+            <div class="actions">
+              <a class="btn primary" href="#">열기</a>
+              <button class="btn copy" data-copy="https://padlet.com/sample/imagine">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-padlet">PADLET</span></div>
+            <div class="title-cell"><div class="resource-title">로고 디자인 작품</div></div>
+            <div class="resource-desc">학생 결과물 모음</div>
+            <div class="actions">
+              <a class="btn primary" href="#">열기</a>
+              <button class="btn copy" data-copy="https://padlet.com/sample/logo">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-padlet">PADLET</span></div>
+            <div class="title-cell"><div class="resource-title">애니메이터 작품</div></div>
+            <div class="resource-desc">학생 결과물 모음</div>
+            <div class="actions">
+              <a class="btn primary" href="#">열기</a>
+              <button class="btn copy" data-copy="https://padlet.com/sample/animator">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="program-box searchable" data-type="student" data-keywords="앱개발 aia randomgame touchgame 엔트리 파일">
+        <div class="program-top">
+          <div>
+            <h3>실습 파일 모음</h3>
+            <p>앱 개발 실습용 파일과 기타 샘플 파일을 한 줄씩 관리하는 섹션입니다.</p>
+          </div>
+          <div class="count-badge">3개</div>
+        </div>
+
+        <div class="list-head">
+          <div>유형</div>
+          <div>자료명</div>
+          <div>설명</div>
+          <div>작업</div>
+        </div>
+
+        <div class="resource-list">
+          <div class="resource-row">
+            <div><span class="type-badge type-file">FILE</span></div>
+            <div class="title-cell"><div class="resource-title">randomgame.aia</div></div>
+            <div class="resource-desc">앱인벤터 실습 파일</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/randomgame.aia">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-file">FILE</span></div>
+            <div class="title-cell"><div class="resource-title">touchgame.aia</div></div>
+            <div class="resource-desc">앱인벤터 실습 파일</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/touchgame.aia">링크 복사</button>
+            </div>
+          </div>
+
+          <div class="resource-row">
+            <div><span class="type-badge type-file">FILE</span></div>
+            <div class="title-cell"><div class="resource-title">엔트리 또는 기타 샘플 파일</div></div>
+            <div class="resource-desc">보조 실습 파일</div>
+            <div class="actions">
+              <a class="btn" href="#" download>다운로드</a>
+              <button class="btn copy" data-copy="https://example.com/sample-file.zip">링크 복사</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="empty-message" id="emptyMessage">
+      검색 결과가 없습니다. 프로그램명이나 자료명을 다시 확인해 주세요.
+    </div>
+
+    <div class="footer-note">
+      실제 운영 시에는 <span class="muted-link">#</span> 또는 예시 링크로 되어 있는 자리만 PDF, HWP, Padlet, ZEP 링크로 교체하면 됩니다.
+      내부 사이트이므로 공개 페이지보다 사용 속도와 찾기 쉬운 구조를 우선해 정리하는 것을 추천합니다.
+    </div>
+  </div>
+
+  <div class="toast" id="toast">링크가 복사되었습니다.</div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchableItems = document.querySelectorAll('.searchable');
+    const sections = document.querySelectorAll('.section');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const copyButtons = document.querySelectorAll('[data-copy]');
+    const qrButtons = document.querySelectorAll('[data-qr-toggle]');
+    const toast = document.getElementById('toast');
+
+    let currentFilter = 'all';
+    let toastTimer;
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 1800);
+    }
+
+    function applyFilters(){
+      const keyword = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      searchableItems.forEach(item => {
+        const type = item.dataset.type || '';
+        const keywords = (item.dataset.keywords || '').toLowerCase();
+        const text = item.innerText.toLowerCase();
+
+        const matchFilter = currentFilter === 'all' || type === currentFilter;
+        const matchKeyword = !keyword || keywords.includes(keyword) || text.includes(keyword);
+        const show = matchFilter && matchKeyword;
+
+        item.style.display = show ? '' : 'none';
+        if(show) visibleCount++;
+      });
+
+      sections.forEach(section => {
+        const visibleChildren = [...section.querySelectorAll('.searchable')].some(el => el.style.display !== 'none');
+        section.style.display = visibleChildren ? '' : 'none';
+      });
+
+      emptyMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentFilter = button.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    copyButtons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const text = button.dataset.copy;
+        try{
+          await navigator.clipboard.writeText(text);
+          showToast('링크가 복사되었습니다.');
+        }catch(error){
+          showToast('복사에 실패했습니다. 직접 복사해 주세요.');
+        }
+      });
+    });
+
+    qrButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetId = button.dataset.qrToggle;
+        const target = document.getElementById(targetId);
+        if(!target) return;
+
+        target.classList.toggle('show');
+        button.textContent = target.classList.contains('show') ? 'QR 닫기' : 'QR 보기';
+      });
+    });
+
+    searchInput.addEventListener('input', applyFilters);
+    applyFilters();
+  </script>
+</body>
+</html>
