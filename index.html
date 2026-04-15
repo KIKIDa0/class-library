@@ -1000,6 +1000,7 @@
           <div class="infoNoteTitle" id="infoTitle">참고 사항</div>
           <div class="infoNoteContent" id="infoContent"></div>
         </div>
+        <div id="elUsbProgramTable"></div>
 
         <div class="sectionTop">
           <h2 id="extrasTitle">💡추가</h2>
@@ -1542,7 +1543,7 @@
       smartphone: SMARTPHONE_PER_PERSON_BOOTH
     };
   }
-
+const elUsbProgramTable = document.getElementById("elUsbProgramTable");
   function getModeLabel(mode){
     return mode === "lesson" ? "수업용" : "부스용";
   }
